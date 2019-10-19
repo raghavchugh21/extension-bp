@@ -13,9 +13,9 @@ titles = {
     "0":[],
     "1":[]
 }
-with open ('ClickbaitDataset.txt',encoding='utf8') as f:
+with open ('Datasets/ClickbaitDataset.txt',encoding='utf8') as f:
     titles["1"] = f.read().splitlines()
-with open ('NonClickbaitDataset.txt',encoding='utf8') as f:
+with open ('Datasets/NonClickbaitDataset.txt',encoding='utf8') as f:
     titles["0"] = f.read().splitlines()
 print("\nDataset Loaded, Preprocessing Data")
 train_labels = [0]*len(titles["0"]) + [1]*len(titles["1"])
