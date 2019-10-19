@@ -11,36 +11,20 @@ from sklearn.metrics import classification_report, confusion_matrix
 import base64
 from sklearn.feature_extraction.text import CountVectorizer
 
-def tokenize(text):
-    lmtzr = WordNetLemmatizer()
-    tokens = nltk.word_tokenize(text)
-    l = []
-    for t in tokens:
-        try:
-            t = float(t)
-            l.append("<NUM>")
-        except ValueError:
-            l.append(lmtzr.lemmatize(t))
-    return l
-
 #with open('wordsEn.txt') as f:
  #   voc = f.read().splitlines()
 
 print ("\nProcessing dataset\n")
-vectorizer = TfidfVectorizer(tokenizer=tokenize,
-                             stop_words='english',
-                             lowercase=True,
-                             analyzer="word",
-                             ngram_range=(1, 3))
+vectorizer = TfidfVectorizer()
 
 
 titles = {
     "0":[],
     "1":[]
 }
-with open ('Data/Raw/Raw/clickbait.txt') as f:
+with open ('ClickbaitDataset.txt',encoding='utf8') as f:
     titles["1"] = f.read().splitlines()
-with open ('Data/Raw/Raw/genuine.txt') as f:
+with open ('NonClickbaitDataset.txt',encoding='utf8') as f:
     titles["0"] = f.read().splitlines()
 train_labels = [0]*len(titles["0"]) + [1]*len(titles["1"])
 train_set = titles["0"] + titles["1"]
@@ -49,8 +33,19 @@ train_set = vectorizer.fit_transform(train_set, train_labels)
 print  ("\nTrain matrix shape: " + str(train_set.shape))
 params = {'kernel': 'rbf', 'C': 2, 'gamma': 1}
 clf = svm.SVC(C=params['C'], kernel=params['kernel'], gamma=params['gamma'], probability=True)
+re_fit_model = True
+with open("vectorizer", 'wb') as f:
+    pickle.dump(vectorizer, f)
 clf.fit(train_set, train_labels)
-predictions = clf.predict(train_set)
+with open("trainedmodel", 'wb') as f:
+    pickle.dump(clf, f)
+print("Model Created")  
+with open('trainedmodel','rb') as f:
+    clf=pickle.load(f)
+x="you are a nigga"
+x=vectorizer.transform(x)[0][1]
+predictions = clf.predict(x)
+print(predictions)
 print ("\nTrain set")
 print ("\nAccuracy Score: " + str(metrics.accuracy_score(predictions, train_labels)))
 print ("F1 Score: " + str(metrics.f1_score(predictions, train_labels)))
