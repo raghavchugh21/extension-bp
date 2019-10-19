@@ -13,7 +13,7 @@ let callback = () => {
   if (videos.length != 0) {
     [...videos].forEach(video => {
       let videoA = video.getElementsByTagName("a");
-      videoA[0].setAttribute("style", "color: white");
+      videoA[0].removeAttribute("style");
       let title = videoA[0].getAttribute("title");
       titles.push(title);
     });
@@ -28,6 +28,8 @@ let callback = () => {
 
     Http.onreadystatechange = e => {
       console.log(Http.responseText);
+      body.titles = "";
+      titles = [];
       let responseText = Http.responseText;
       let responses = responseText.split(" ");
       let confidence = [];
@@ -56,11 +58,20 @@ let searchInput = searchInputs[0];
 console.log(searchInput);
 searchInput.onkeyup = event => {
   console.log("logg");
-  if (event.key === "Enter") setTimeout(() => docReady(callback), 1000);
+  if (event.key === "Enter") setTimeout(() => docReady(callback), 2000);
+  let suggestionList = document.getElementsByClassName("sbsb_c");
+  console.log(suggestionList);
+
+  suggestionList.onclick = event => {
+    console.log(event);
+    setTimeout(() => docReady(callback), 2000);
+  };
 };
 
 let searchButton = document.getElementById("search-icon-legacy");
 searchButton.onclick = event => {
   event.preventDefault();
-  setTimeout(() => docReady(callback), 1000);
+  setTimeout(() => docReady(callback), 2000);
 };
+
+setTimeout(() => docReady(callback), 2000);

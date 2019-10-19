@@ -1,10 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style></style>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: "bit-font";
+        src: url("bit-font.ttf");
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #gh-link {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .container {
+        background-image: url("frontend.png");
+        display: flex;
+        flex-flow: column;
+        width: 300px;
+        height: 450px;
+        color: white;
+        font-family: "Raleway", sans-serif;
+        font-size: 15px;
+        border: 2px solid wheat;
+      }
+      .description {
+        margin-top: 200px;
+        padding: 10px;
+      }
+      .footer {
+        margin-top: 80px;
+        margin-right: 10px;
+        text-align: right;
+      }
+      .team-name {
+        font-family: "bit-font";
+        font-size: 6px;
+      }
+    </style>
   </head>
   <body>
-    <button id="changeColor">Detect</button>
+    <div class="container">
+      <span class="description"
+        >Aiming to improve quality of content on youtube by filtering out
+        clickbaits. Videos falling into the category have their title in red
+        "automagically"</span
+      >
+      <div id="gh-link">
+        <a
+          style="margin-right: 10px;"
+          href="https://github.com/nirmeshbansal/bits_please-extension"
+          >Fork Me
+        </a>
+        <img src="githublogo.png" alt="logo" width="32px" height="32px" />
+      </div>
+      <span class="footer"
+        >made by- <span class="team-name">bits_please</span></span
+      >
+    </div>
     <script src="popup.js"></script>
   </body>
 </html>
