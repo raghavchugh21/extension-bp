@@ -1,24 +1,11 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import _pickle as pickle
 from sklearn import metrics
-import pandas as pd
 from sklearn import svm
-from nltk.stem.wordnet import WordNetLemmatizer
-from sklearn.model_selection import train_test_split
-import nltk
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
-import base64
-from sklearn.feature_extraction.text import CountVectorizer
-import model_selection
-from sklearn.svm import SVC
-from sklearn.svm import SVR
-from sklearn.model_selection import GridSearchCV
 
-#with open('wordsEn.txt') as f:
- #   voc = f.read().splitlines()
-
-print ("\nProcessing dataset\n")
+print ("\nLoading dataset\n")
 vectorizer = TfidfVectorizer()
 
 
@@ -30,31 +17,38 @@ with open ('ClickbaitDataset.txt',encoding='utf8') as f:
     titles["1"] = f.read().splitlines()
 with open ('NonClickbaitDataset.txt',encoding='utf8') as f:
     titles["0"] = f.read().splitlines()
+print("\nDataset Loaded, Preprocessing Data")
 train_labels = [0]*len(titles["0"]) + [1]*len(titles["1"])
 train_set = titles["0"] + titles["1"]
+#train_set, train_labels, validation_set, validation_labels = train_test_split(train_set, train_labels, test_size=0.20)
 print("Train size: " + str(len(train_labels)))
+#print("Validation size: " + str(len(validation_labels)))
+
 train_set = vectorizer.fit_transform(train_set, train_labels)
+print("\nData proprocessed!")
+#validation_set = vectorizer.transform(validation_set)
 print  ("\nTrain matrix shape: " + str(train_set.shape))
 params = {'kernel': 'rbf', 'C': 2, 'gamma': 1}
 clf = svm.SVC(C=params['C'], kernel=params['kernel'], gamma=params['gamma'], probability=True)
-print("Evaluating parameters\n")
-re_fit_model = True
-with open("vectorizer", 'wb') as f:
-    pickle.dump(vectorizer, f)
-gsc = GridSearchCV(
-        estimator=SVR(kernel='rbf'),
-        param_grid={
-            'C': [0.1, 1, 100, 1000],
-            'epsilon': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10],
-            'gamma': [0.0001, 0.001, 0.005, 0.1, 1, 3, 5]
-        },
-        cv=5, scoring='neg_mean_squared_error', verbose=0, n_jobs=-1)
-grid_result = gsc.fit(train_set, train_labels)
-best_params = grid_result.best_params_
-print("The parameters are\n")
-print(best_params)
-clf = svm.SVC(C=best_params['C'], kernel=best_params['kernel'], gamma=best_params['gamma'], probability=True)
-print("now training model")
+# print("Evaluating parameters\n")
+# re_fit_model = True
+# with open("vectorizer", 'wb') as f:
+#     pickle.dump(vectorizer, f)
+# gsc = GridSearchCV(
+#         estimator=SVR(kernel='rbf'),
+#         param_grid={
+#             'C': [0.1, 1, 100, 1000],
+#             'epsilon': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10],
+#             'gamma': [0.0001, 0.001, 0.005, 0.1, 1, 3, 5]
+#         },
+#         cv=5, scoring='neg_mean_squared_error', verbose=0, n_jobs=-1)
+# grid_result = gsc.fit(train_set, train_labels)
+# best_params = grid_result.best_params_
+# print("The parameters are\n")
+# print(best_params)
+# clf = svm.SVC(C=best_params['C'], kernel=best_params['kernel'], gamma=best_params['gamma'], probability=True)
+# print("now training model")
+print("Fitting Model")
 clf.fit(train_set, train_labels)
 with open("trainedmodel", 'wb') as f:
     pickle.dump(clf, f)

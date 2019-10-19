@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 import sys
 
+
 def predict(headline):
     try:
         f = open('trainedmodel','rb')
