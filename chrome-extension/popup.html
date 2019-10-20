@@ -39,7 +39,7 @@
         border: 2px solid wheat;
       }
       .description {
-        margin-top: 200px;
+        margin-top: 150px;
         padding: 10px;
       }
       .footer {
@@ -50,6 +50,16 @@
       .team-name {
         font-family: "bit-font";
         font-size: 6px;
+      }
+      .legend-item {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        margin-top: 5px;
+      }
+      .legend-color {
+        width: 20px;
+        height: 20px;
       }
     </style>
   </head>
@@ -67,6 +77,16 @@
           >Fork Me
         </a>
         <img src="githublogo.png" alt="logo" width="32px" height="32px" />
+      </div>
+      <div id="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #39abfd;"></div>
+          <span style="margin-left: 5px;">Likely clickbait</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #ff797f;"></div>
+          <span style="margin-left: 5px;">Clickbait</span>
+        </div>
       </div>
       <span class="footer"
         >made by- <span class="team-name">bits_please</span></span

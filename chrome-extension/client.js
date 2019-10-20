@@ -24,6 +24,10 @@ let callback = () => {
       titles.push(title);
     });
 
+    videoDiv.forEach(v => {
+      v.removeAttribute("style");
+    });
+
     body.titles = titles;
     let Http = new XMLHttpRequest();
     let url = "https://ytclickbait.azurewebsites.net/";
@@ -44,13 +48,20 @@ let callback = () => {
       });
 
       for (i = 0; i < videos.length; i++) {
-        if (confidence[i + 1] >= 70) {
+        let videoAEle = videos[i].getElementsByTagName("a");
+        if (confidence[i + 1] >= 75) {
           videoDiv[i].setAttribute(
             "style",
             "border: 2px solid red; border-radius: 10px;padding:10px"
           );
-          let videoAEle = videos[i].getElementsByTagName("a");
-          videoAEle[0].setAttribute("style", "color: #ff7979");
+          videoAEle[0].setAttribute("style", "color: #ff797f");
+        } else if (confidence[i + 1] >= 50 && confidence[i + 1] < 75) {
+          videoDiv[i].setAttribute(
+            "style",
+            "border: 2px solid #39abfd; border-radius: 10px;padding:10px"
+          );
+
+          videoAEle[0].setAttribute("style", "color: #39abfd");
         }
       }
     };
@@ -75,7 +86,7 @@ searchInput.onkeyup = event => {
 let searchButton = document.getElementById("search-icon-legacy");
 searchButton.onclick = event => {
   event.preventDefault();
-  setTimeout(() => docReady(callback), 2000);
+  setTimeout(() => docReady(callback), 1000);
 };
 
-setTimeout(() => docReady(callback), 2000);
+setTimeout(() => docReady(callback), 1000);
