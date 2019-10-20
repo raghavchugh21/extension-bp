@@ -10,6 +10,12 @@ let callback = () => {
   let body = { titles: "" };
   let titles = [];
   let videos = document.getElementsByClassName("title-and-badge");
+  let videoDivMix = document.querySelectorAll("[id='dismissable']");
+  let videoComp = [...videoDivMix];
+  let videoDiv = videoComp.filter(v => {
+    return v.className === "style-scope ytd-video-renderer";
+  });
+  console.log(videoDiv);
   if (videos.length != 0) {
     [...videos].forEach(video => {
       let videoA = video.getElementsByTagName("a");
@@ -39,19 +45,19 @@ let callback = () => {
 
       for (i = 0; i < videos.length; i++) {
         if (confidence[i + 1] >= 70) {
+          videoDiv[i].setAttribute(
+            "style",
+            "border: 2px solid red; border-radius: 10px;padding:10px"
+          );
           let videoAEle = videos[i].getElementsByTagName("a");
-          videoAEle[0].setAttribute("style", "color: red");
+          videoAEle[0].setAttribute("style", "color: #ff7979");
         }
       }
     };
-
-    //event handlers
-
-    // let videoTitle = videoA.innerHTML;
-    // console.log(videoA);
   }
 };
-// setTimeout(() => docReady(callback), 3000);
+
+//event handlers
 let searchDiv = document.getElementById("search-input");
 let searchInputs = searchDiv.getElementsByTagName("input");
 let searchInput = searchInputs[0];
@@ -60,8 +66,6 @@ searchInput.onkeyup = event => {
   console.log("logg");
   if (event.key === "Enter") setTimeout(() => docReady(callback), 2000);
   let suggestionList = document.getElementsByClassName("sbsb_c");
-  console.log(suggestionList);
-
   suggestionList.onclick = event => {
     console.log(event);
     setTimeout(() => docReady(callback), 2000);
