@@ -10,7 +10,7 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
           pageUrl: {
-            pathPrefix: "https://www.youtube.com/results?search_query="
+            hostEquals: "www.youtube.com"
           }
         })
       ],
