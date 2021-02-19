@@ -13,7 +13,7 @@ Detection of youtube clickbait content and highlighting the same by rendering th
  - Cloud Computing - Microsoft Azure
  - Web Development
  
-**Technology Stack**
+**Technologies Used**
  - Scikit-learn
  - Youtube API
  - Rest API - Flask
