@@ -1,4 +1,4 @@
-## Problem Statement
+## Problem Statement - Youtube Clickbait Detector
 Detecting and Filtering out the most annoying aspect of Youtube - Clickbaits!
 The tedious problem of clickbaits remains unsolved till date.
 bits_please proposes a user-friendly way to help out Youtube users avoid the clickbaits and unwanted youtube content with help of start-of-the-art technologies.
